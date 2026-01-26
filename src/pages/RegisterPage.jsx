@@ -16,7 +16,7 @@ export default function RegisterPage() {
         setRegisterData({
             ...registerData,
             [name]: value
-        })
+        });
     }
 
     async function handleSubmit(event) {
@@ -35,7 +35,7 @@ export default function RegisterPage() {
             birthDate: registerData.birthDate
         };
 
-        axios
+        await axios
             .post("http://localhost:8080/api/v1/auth/register", request)
             .then((response) => {
                 alert("Success: " + response.data);
