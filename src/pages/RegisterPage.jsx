@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 export default function RegisterPage() {
     const [registerData, setRegisterData] = useState({
@@ -18,13 +19,42 @@ export default function RegisterPage() {
         })
     }
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
 
         if(registerData.password !== registerData.confirmPassword) {
             alert("Passwords don't match, please try again");
             return null;
         }
+
+        const request = {
+            login: registerData.login,
+            password: registerData.password,
+            name: registerData.name,
+            surname: registerData.surname,
+            birthDate: registerData.birthDate
+        };
+
+        axios
+            .post("http://localhost:8080/api/v1/auth/register", request)
+            .then((response) => {
+                alert("Success: " + response.data);
+                console.log(response);
+            })
+            .catch((error) => {
+                if (error.response && error.response.data) {
+                    const data = error.response.data;
+
+                    const errorMessage = data.detail || data.Error || data.message ||
+                        (typeof data === 'string' ? data : "Registration failed");
+
+                    alert(errorMessage);
+                } else {
+                    alert("Network Error: Cannot connect to server");
+                }
+                console.log(error);
+            });
+
     }
 
     return (
