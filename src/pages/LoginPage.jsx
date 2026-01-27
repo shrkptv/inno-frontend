@@ -7,6 +7,17 @@ export default function LoginPage() {
         password: ''
     });
 
+    const purpleStyle = {
+        backgroundColor: '#6f42c1',
+        borderColor: '#6f42c1',
+        color: 'white'
+    };
+
+    const cardHeaderStyle = {
+        color: '#5a32a3',
+        fontWeight: '600'
+    };
+
     function handleChange(event) {
         const {name, value} = event.target;
         setLoginData({
@@ -45,31 +56,50 @@ export default function LoginPage() {
     }
 
     return (
-        <div>
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email: </label>
-                    <input
-                        type="email"
-                        name="email"
-                        value={loginData.email}
-                        onChange={handleChange}
-                    />
+        <div className="container-fluid vh-100 d-flex justify-content-center align-items-center bg-light">
+            <div className="col-md-5 col-lg-4">
+                <div className="card shadow-lg border-0 rounded-4 p-4">
+                    <h2 className="text-center mb-4" style={cardHeaderStyle}>Login</h2>
+
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-4">
+                            <label className="form-label fw-bold">Email</label>
+                            <input
+                                className="form-control border-2"
+                                type="email"
+                                name="email"
+                                placeholder="name@example.com"
+                                value={loginData.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="form-label fw-bold">Password</label>
+                            <input
+                                className="form-control border-2"
+                                type="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                value={loginData.password}
+                                onChange={handleChange}
+                                required
+                                minLength={8}
+                            />
+                        </div>
+
+                        <div className="d-grid gap-2">
+                            <button
+                                className="btn btn-lg shadow-sm fw-bold"
+                                style={purpleStyle}
+                                type="submit">
+                                Sign In
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div>
-                    <label>Password: </label>
-                    <input
-                        type="password"
-                        name="password"
-                        value={loginData.password}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <button type="submit">Sing In</button>
-                </div>
-            </form>
+            </div>
         </div>
     );
 }
