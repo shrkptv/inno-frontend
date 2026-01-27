@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function RegisterPage() {
     const [registerData, setRegisterData] = useState({
@@ -10,6 +11,17 @@ export default function RegisterPage() {
         surname: '',
         birthDate: ''
     });
+
+    const purpleStyle = {
+        backgroundColor: '#6f42c1',
+        borderColor: '#6f42c1',
+        color: 'white'
+    };
+
+    const cardHeaderStyle = {
+        color: '#5a32a3',
+        fontWeight: '600'
+    };
 
     function handleChange(event) {
         const {name , value} = event.target;
@@ -58,67 +70,105 @@ export default function RegisterPage() {
     }
 
     return (
-        <div>
-            <h2>Create account</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email: </label>
-                    <input
-                        type="email"
-                        name="login"
-                        value={registerData.login}
-                        onChange={handleChange}
-                    />
+        <div className="container-fluid vh-100 d-flex justify-content-center align-items-center bg-light">
+            <div className="col-md-6 col-lg-4">
+                <div className="card shadow-lg border-0 rounded-4 p-4">
+                    <h2 className="text-center mb-4" style={cardHeaderStyle}>Create Account</h2>
+                    <form onSubmit={handleSubmit}>
+                        <div className="row">
+                            <div className="col-6 mb-3">
+                                <label className="form-label fw-bold">Name</label>
+                                <input
+                                    className="form-control border-2"
+                                    type="text"
+                                    name="name"
+                                    value={registerData.name}
+                                    onChange={handleChange}
+                                    required
+                                    pattern="^[A-Za-z\s]+$"
+                                    title="Please use only letters"
+                                />
+                            </div>
+                            <div className="col-6 mb-3">
+                                <label className="form-label fw-bold">Surname</label>
+                                <input
+                                    className="form-control border-2"
+                                    type="text"
+                                    name="surname"
+                                    value={registerData.surname}
+                                    onChange={handleChange}
+                                    required
+                                    pattern="^[A-Za-z\s]+$"
+                                    title="Please use only letters"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="form-label fw-bold">Birth Date</label>
+                            <input
+                                className="form-control border-2"
+                                type="date"
+                                name="birthDate"
+                                value={registerData.birthDate}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="form-label fw-bold">Email</label>
+                            <input
+                                className="form-control border-2"
+                                type="email"
+                                name="login"
+                                placeholder="name@example.com"
+                                value={registerData.login}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+
+                        <div className="row">
+                            <div className="col-6 mb-4">
+                                <label className="form-label fw-bold">Password</label>
+                                <input
+                                    className="form-control border-2"
+                                    type="password"
+                                    name="password"
+                                    value={registerData.password}
+                                    onChange={handleChange}
+                                    required
+                                    minLength={8}
+                                    title="Password must have at least 8 characters"
+                                />
+                            </div>
+                            <div className="col-6 mb-4">
+                                <label className="form-label fw-bold">Confirm</label>
+                                <input
+                                    className="form-control border-2"
+                                    type="password"
+                                    name="confirmPassword"
+                                    value={registerData.confirmPassword}
+                                    onChange={handleChange}
+                                    required
+                                    minLength={8}
+                                    title="Password must have at least 8 characters"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="d-grid">
+                            <button
+                                className="btn btn-lg shadow-sm fw-bold"
+                                style={purpleStyle}
+                                type="submit">
+                                Register
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div>
-                    <label>Password: </label>
-                    <input
-                        type="password"
-                        name="password"
-                        value={registerData.password}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <label>Confirm password: </label>
-                    <input
-                        type="password"
-                        name="confirmPassword"
-                        value={registerData.confirmPassword}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <label>Name: </label>
-                    <input
-                        type="text"
-                        name="name"
-                        value={registerData.name}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <label>Surname: </label>
-                    <input
-                        type="text"
-                        name="surname"
-                        value={registerData.surname}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <label>Birth date: </label>
-                    <input
-                        type="date"
-                        name="birthDate"
-                        value={registerData.birthDate}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <button type="submit">Register</button>
-                </div>
-            </form>
+            </div>
         </div>
     );
 }
