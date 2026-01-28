@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 export default function LoginPage() {
     const [loginData, setLoginData] = useState({
@@ -96,6 +97,9 @@ export default function LoginPage() {
                                 type="submit">
                                 Sign In
                             </button>
+                        </div>
+                        <div className="mt-3 text-sm-center">
+                            <Link to="/register">Register</Link>
                         </div>
                     </form>
                 </div>

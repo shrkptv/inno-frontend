@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from "react-router-dom";
 
 export default function RegisterPage() {
     const [registerData, setRegisterData] = useState({
@@ -165,6 +166,10 @@ export default function RegisterPage() {
                                 type="submit">
                                 Register
                             </button>
+                        </div>
+
+                        <div className="mt-3 text-sm-center">
+                            <Link to="/login">Login</Link>
                         </div>
                     </form>
                 </div>
