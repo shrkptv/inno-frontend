@@ -47,8 +47,10 @@ export default function RegisterPage() {
             birthDate: registerData.birthDate
         };
 
+        const serverURL = import.meta.env.VITE_SERVER_URL;
+
         await axios
-            .post("http://localhost:8080/api/v1/auth/register", request)
+            .post(`${serverURL}/auth/register`, request)
             .then((response) => {
                 alert("Success: " + response.data);
                 console.log(response);

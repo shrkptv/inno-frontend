@@ -35,8 +35,10 @@ export default function LoginPage() {
             password: loginData.password
         };
 
+        const serverURL = import.meta.env.VITE_SERVER_URL;
+
         await axios
-            .post("http://localhost:8080/api/v1/auth/login", request)
+            .post(`${serverURL}/auth/login`, request)
             .then((response) => {
                 const accessToken = response.data.accessToken;
                 const refreshToken = response.data.refreshToken;
