@@ -13,6 +13,7 @@ export default function RegisterPage() {
         birthDate: ''
     });
 
+    const today = new Date().toISOString().split('T')[0];
     const isPasswordMatch = registerData.password === registerData.confirmPassword;
     const showMatchError = !isPasswordMatch && registerData.confirmPassword.length > 0;
 
@@ -112,6 +113,7 @@ export default function RegisterPage() {
                                 value={registerData.birthDate}
                                 onChange={handleChange}
                                 required
+                                max={today}
                             />
                         </div>
 
