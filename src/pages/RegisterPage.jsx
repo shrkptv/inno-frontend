@@ -13,6 +13,9 @@ export default function RegisterPage() {
         birthDate: ''
     });
 
+    const isPasswordMatch = registerData.password === registerData.confirmPassword;
+    const showMatchError = !isPasswordMatch && registerData.confirmPassword.length > 0;
+
     const purpleStyle = {
         backgroundColor: '#6f42c1',
         borderColor: '#6f42c1',
@@ -34,11 +37,6 @@ export default function RegisterPage() {
 
     async function handleSubmit(event) {
         event.preventDefault();
-
-        if(registerData.password !== registerData.confirmPassword) {
-            alert("Passwords don't match, please try again");
-            return null;
-        }
 
         const request = {
             login: registerData.login,
@@ -130,33 +128,33 @@ export default function RegisterPage() {
                             />
                         </div>
 
-                        <div className="row">
-                            <div className="col-6 mb-4">
-                                <label className="form-label fw-bold">Password</label>
-                                <input
-                                    className="form-control border-2"
-                                    type="password"
-                                    name="password"
-                                    value={registerData.password}
-                                    onChange={handleChange}
-                                    required
-                                    minLength={8}
-                                    title="Password must have at least 8 characters"
-                                />
-                            </div>
-                            <div className="col-6 mb-4">
-                                <label className="form-label fw-bold">Confirm</label>
-                                <input
-                                    className="form-control border-2"
-                                    type="password"
-                                    name="confirmPassword"
-                                    value={registerData.confirmPassword}
-                                    onChange={handleChange}
-                                    required
-                                    minLength={8}
-                                    title="Password must have at least 8 characters"
-                                />
-                            </div>
+                        <div className="mb-4">
+                            <label className="form-label fw-bold">Password</label>
+                            <input
+                                className="form-control border-2"
+                                type="password"
+                                name="password"
+                                value={registerData.password}
+                                onChange={handleChange}
+                                required
+                                minLength={8}
+                                title="Password must have at least 8 characters"
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="form-label fw-bold">Confirm password</label>
+                            <input
+                                className="form-control border-2"
+                                type="password"
+                                name="confirmPassword"
+                                value={registerData.confirmPassword}
+                                onChange={handleChange}
+                                required
+                                minLength={8}
+                                title="Password must have at least 8 characters"
+                            />
+                            {showMatchError && <div className="text-danger mt-2">Passwords don't match</div>}
                         </div>
 
                         <div className="d-grid">
