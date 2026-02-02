@@ -7,7 +7,7 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem("accessToken");
     if (token) {
-        config.headers.Authorization = 'Bearer ${token}';
+        config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
     },
@@ -25,7 +25,7 @@ api.interceptors.response.use(
             try {
                 const refreshToken = localStorage.getItem("refreshToken");
 
-                const res = await axios.post('{import.meta.env.VITE_SERVER_URL}/auth/refresh',null, {
+                const res = await axios.post(`{import.meta.env.VITE_SERVER_URL}/auth/refresh`,null, {
                     params: { refreshToken: refreshToken }
                 });
 
@@ -33,7 +33,7 @@ api.interceptors.response.use(
                     const { accessToken } = res.data;
                     localStorage.setItem("accessToken", accessToken);
 
-                    originalRequest.headers.Authorization = 'Bearer ${accessToken}'
+                    originalRequest.headers.Authorization = `Bearer ${accessToken}`
                     return api(originalRequest);
                 }
             } catch (refreshError) {
