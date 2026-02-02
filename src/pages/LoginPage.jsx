@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../api/axios.js";
 import {Link} from "react-router-dom";
 
 export default function LoginPage() {
@@ -35,10 +35,8 @@ export default function LoginPage() {
             password: loginData.password
         };
 
-        const serverURL = import.meta.env.VITE_SERVER_URL;
-
-        await axios
-            .post(`${serverURL}/auth/login`, request)
+        await api
+            .post(`/auth/login`, request)
             .then((response) => {
                 const accessToken = response.data.accessToken;
                 const refreshToken = response.data.refreshToken;

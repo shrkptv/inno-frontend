@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../api/axios.js";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom";
 
@@ -47,10 +47,8 @@ export default function RegisterPage() {
             birthDate: registerData.birthDate
         };
 
-        const serverURL = import.meta.env.VITE_SERVER_URL;
-
-        await axios
-            .post(`${serverURL}/auth/register`, request)
+        await api
+            .post(`/auth/register`, request)
             .then((response) => {
                 alert("Success: " + response.data);
                 console.log(response);
