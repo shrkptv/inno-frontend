@@ -1,7 +1,7 @@
 import { useState } from "react";
 import api from "../api/axios.js";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export default function RegisterPage() {
     const [registerData, setRegisterData] = useState({
@@ -12,6 +12,8 @@ export default function RegisterPage() {
         surname: '',
         birthDate: ''
     });
+
+    const navigate = useNavigate();
 
     const today = new Date().toISOString().split('T')[0];
     const isPasswordMatch = registerData.password === registerData.confirmPassword;
@@ -52,6 +54,7 @@ export default function RegisterPage() {
             .then((response) => {
                 alert("Success: " + response.data);
                 console.log(response);
+                navigate("/login")
             })
             .catch((error) => {
                 if (error.response && error.response.data) {
