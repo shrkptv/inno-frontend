@@ -32,7 +32,6 @@ export default function Navbar() {
             <div className="w-100 px-2">
                 <div className="navbar-nav d-flex flex-row gap-5 justify-content-center">
                     <Link className="nav-link text-white fs-5 fw-medium" to="/orders">Orders</Link>
-                    <Link className="nav-link text-white fs-5 fw-medium" to="/payments">Payments</Link>
                 </div>
             </div>
         </nav>

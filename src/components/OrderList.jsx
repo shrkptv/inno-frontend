@@ -22,7 +22,7 @@ const OrderList = () => {
     };
 
     return (
-        <div className="container mt-4" style={{ maxWidth: '800px' }}>
+        <div className="container mt-4" style={{ maxWidth: '600px' }}>
             <h2 className="mb-4 text-center fw-bold">Order History</h2>
 
             {orders.length === 0 ? (
