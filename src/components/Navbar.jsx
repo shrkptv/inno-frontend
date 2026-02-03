@@ -4,8 +4,12 @@ export default function Navbar() {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        localStorage.clear();
-        navigate("/login");
+        const isConfirmed = window.confirm("Are you sure you want to log out?");
+
+        if (isConfirmed) {
+            localStorage.clear();
+            navigate("/login");
+        }
     };
 
     return (
