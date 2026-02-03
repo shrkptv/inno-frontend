@@ -1,12 +1,14 @@
 import { useState } from "react";
 import api from "../api/axios.js";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export default function LoginPage() {
     const [loginData, setLoginData] = useState({
         email: '',
         password: ''
     });
+
+    const navigate = useNavigate();
 
     const purpleStyle = {
         backgroundColor: '#6f42c1',
@@ -47,6 +49,7 @@ export default function LoginPage() {
                     localStorage.setItem("accessToken", accessToken);
                     localStorage.setItem("refreshToken", refreshToken);
                     alert("Login successful!");
+                    navigate("/orders");
                 }
             })
             .catch((error) => {
