@@ -25,7 +25,7 @@ api.interceptors.response.use(
             try {
                 const refreshToken = localStorage.getItem("refreshToken");
 
-                const res = await axios.post(`{import.meta.env.VITE_SERVER_URL}/auth/refresh`,null, {
+                const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/auth/refresh`,null, {
                     params: { refreshToken: refreshToken }
                 });
 
