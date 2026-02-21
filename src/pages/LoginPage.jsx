@@ -59,6 +59,20 @@ export default function LoginPage() {
 
     }
 
+    const handleGoogleLogin = () => {
+        const keycloakUrl = import.meta.env.VITE_KEYCLOAK_URL;
+        const clientId = import.meta.env.VITE_KEYCLOAK_CLIENT_ID;
+        const redirectUri = import.meta.env.VITE_GOOGLE_REDIRECT_URI;
+
+        const responseType = "code";
+        const scope = "openid";
+        const idpHint = "google";
+
+        const authUrl = `${keycloakUrl}?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=${responseType}&scope=${scope}&kc_idp_hint=${idpHint}`;
+
+        window.location.href = authUrl;
+    };
+
     return (
         <div className="container-fluid vh-100 d-flex justify-content-center align-items-center bg-light">
             <div className="col-md-5 col-lg-4">
@@ -99,6 +113,14 @@ export default function LoginPage() {
                                 style={purpleStyle}
                                 type="submit">
                                 Sign In
+                            </button>
+                        </div>
+                        <div className="d-grid gap-2 mt-3">
+                            <button
+                                className="btn btn-outline-danger btn-lg shadow-sm fw-bold"
+                                type="button"
+                                onClick={handleGoogleLogin}>
+                                <i className="bi bi-google me-2"></i> Sign in with Google
                             </button>
                         </div>
                         <div className="mt-3 text-sm-center">
