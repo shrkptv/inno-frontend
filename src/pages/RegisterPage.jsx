@@ -88,7 +88,7 @@ export default function RegisterPage() {
                                     value={registerData.name}
                                     onChange={handleChange}
                                     required
-                                    pattern="^[A-Za-z\s]+$"
+                                    pattern="^[A-Za-zА-Яа-яЁё\s]+$"
                                     title="Please use only letters"
                                 />
                             </div>
@@ -101,7 +101,7 @@ export default function RegisterPage() {
                                     value={registerData.surname}
                                     onChange={handleChange}
                                     required
-                                    pattern="^[A-Za-z\s]+$"
+                                    pattern="^[A-Za-zА-Яа-яЁё\s]+$"
                                     title="Please use only letters"
                                 />
                             </div>
