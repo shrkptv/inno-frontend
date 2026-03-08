@@ -42,15 +42,15 @@ export default function RegisterPage() {
         event.preventDefault();
 
         const request = {
-            login: registerData.login,
-            password: registerData.password,
             name: registerData.name,
             surname: registerData.surname,
-            birthDate: registerData.birthDate
+            birthDate: registerData.birthDate,
+            email: registerData.login,
+            password: registerData.password
         };
 
         await api
-            .post(`/auth/register`, request)
+            .post(`/users/register`, request)
             .then((response) => {
                 alert("Success: " + response.data);
                 console.log(response);

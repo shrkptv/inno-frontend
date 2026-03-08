@@ -1,6 +1,6 @@
 import { useState } from "react";
-import api from "../api/axios.js";
 import {Link, useNavigate} from "react-router-dom";
+import axios from "axios";
 
 export default function LoginPage() {
     const [loginData, setLoginData] = useState({
@@ -32,43 +32,44 @@ export default function LoginPage() {
     async function handleSubmit(event) {
         event.preventDefault();
 
-        const request = {
-            login: loginData.email,
-            password: loginData.password
-        };
+        const params = new URLSearchParams();
+        params.append('grant_type', 'password');
+        params.append('client_id', import.meta.env.VITE_KEYCLOAK_CLIENT_ID);
+        params.append('username', loginData.email);
+        params.append('password', loginData.password);
+        params.append('scope', 'openid');
 
-        await api
-            .post(`/auth/login`, request)
-            .then((response) => {
-                const accessToken = response.data.accessToken;
-                const refreshToken = response.data.refreshToken;
-                console.log("Access token: " + accessToken);
-                console.log("Refresh token: " + refreshToken);
-                if(accessToken && refreshToken)
-                {
-                    localStorage.setItem("accessToken", accessToken);
-                    localStorage.setItem("refreshToken", refreshToken);
-                    alert("Login successful!");
-                    navigate("/orders");
-                }
-            })
-            .catch((error) => {
-                const errorMsg = error.response?.data?.Error || error.response?.data?.detail || "Login failed";
-                alert(errorMsg);
-            });
+        try {
+            const response = await axios.post(
+                import.meta.env.VITE_KEYCLOAK_URL,
+                params,
+                { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+            );
 
+            const { access_token, refresh_token } = response.data;
+
+            localStorage.setItem("accessToken", access_token);
+            localStorage.setItem("refreshToken", refresh_token);
+            alert("Login successful!");
+            navigate("/orders");
+        } catch (error) {
+            const errorMsg = error.response?.data?.Error || error.response?.data?.detail || "Login failed";
+            alert(errorMsg);
+        }
     }
 
     const handleGoogleLogin = () => {
-        const keycloakUrl = import.meta.env.VITE_KEYCLOAK_URL;
+        const keycloakBaseUrl = import.meta.env.VITE_KEYCLOAK_BASE_URL; // http://localhost:8085
+        const realm = "inno-realm";
         const clientId = import.meta.env.VITE_KEYCLOAK_CLIENT_ID;
-        const redirectUri = import.meta.env.VITE_GOOGLE_REDIRECT_URI;
+        const redirectUri = encodeURIComponent(import.meta.env.VITE_GOOGLE_REDIRECT_URI);
 
-        const responseType = "code";
-        const scope = "openid";
-        const idpHint = "google";
-
-        const authUrl = `${keycloakUrl}?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=${responseType}&scope=${scope}&kc_idp_hint=${idpHint}`;
+        const authUrl = `${keycloakBaseUrl}/realms/${realm}/protocol/openid-connect/auth` +
+            `?client_id=${clientId}` +
+            `&redirect_uri=${redirectUri}` +
+            `&response_type=code` +
+            `&scope=openid` +
+            `&kc_idp_hint=google`;
 
         window.location.href = authUrl;
     };
