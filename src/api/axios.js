@@ -25,15 +25,22 @@ api.interceptors.response.use(
             try {
                 const refreshToken = localStorage.getItem("refreshToken");
 
-                const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/auth/refresh`,null, {
-                    params: { refreshToken: refreshToken }
-                });
+                const params = new URLSearchParams();
+                params.append('grant_type', 'refresh_token');
+                params.append('client_id', import.meta.env.VITE_KEYCLOAK_CLIENT_ID);
+                params.append('refresh_token', refreshToken);
+
+                const res = await axios.post(
+                    `${import.meta.env.VITE_KEYCLOAK_URL}`,
+                    params
+                );
 
                 if (res.status === 200) {
-                    const { accessToken } = res.data;
-                    localStorage.setItem("accessToken", accessToken);
+                    const { access_token, refresh_token } = res.data;
+                    localStorage.setItem("accessToken", access_token);
+                    localStorage.setItem("refreshToken", refresh_token);
 
-                    originalRequest.headers.Authorization = `Bearer ${accessToken}`
+                    originalRequest.headers.Authorization = `Bearer ${access_token}`;
                     return api(originalRequest);
                 }
             } catch (refreshError) {
