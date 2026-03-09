@@ -52,7 +52,7 @@ export default function RegisterPage() {
         await api
             .post(`/users/register`, request)
             .then((response) => {
-                alert("Success: " + response.data);
+                alert("Registration successful! Please login");
                 console.log(response);
                 navigate("/login")
             })

@@ -9,6 +9,12 @@ export default function OrdersPage(){
         return new URLSearchParams(window.location.search).has("code");
     });
 
+    const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+    const handleRefresh = () => {
+        setRefreshTrigger(prev => prev + 1);
+    };
+
     const navigate = useNavigate();
 
     const interceptorCalled = useRef(false);
@@ -51,10 +57,10 @@ export default function OrdersPage(){
         <div className="container mt-5">
             <div className="row">
                 <div className="col-md-4">
-                    <OrderCreate />
+                    <OrderCreate onOrderCreated={handleRefresh} />
                 </div>
                 <div className="col-md-8">
-                    <OrderList />
+                    <OrderList key={refreshTrigger} />
                 </div>
             </div>
         </div>

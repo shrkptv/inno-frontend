@@ -15,7 +15,7 @@ const CreateOrder = ({ onOrderCreated }) => {
                 const response = await api.get('/orders/available-items');
                 setProducts(response.data);
             } catch (error) {
-                console.error("Ошибка загрузки товаров:", error);
+                console.error("Error loading data:", error);
             }
         };
         fetchItems();
