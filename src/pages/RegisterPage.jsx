@@ -42,17 +42,17 @@ export default function RegisterPage() {
         event.preventDefault();
 
         const request = {
-            login: registerData.login,
-            password: registerData.password,
             name: registerData.name,
             surname: registerData.surname,
-            birthDate: registerData.birthDate
+            birthDate: registerData.birthDate,
+            email: registerData.login,
+            password: registerData.password
         };
 
         await api
-            .post(`/auth/register`, request)
+            .post(`/users/register`, request)
             .then((response) => {
-                alert("Success: " + response.data);
+                alert("Registration successful! Please login");
                 console.log(response);
                 navigate("/login")
             })
@@ -88,7 +88,7 @@ export default function RegisterPage() {
                                     value={registerData.name}
                                     onChange={handleChange}
                                     required
-                                    pattern="^[A-Za-z\s]+$"
+                                    pattern="^[A-Za-zА-Яа-яЁё\s]+$"
                                     title="Please use only letters"
                                 />
                             </div>
@@ -101,7 +101,7 @@ export default function RegisterPage() {
                                     value={registerData.surname}
                                     onChange={handleChange}
                                     required
-                                    pattern="^[A-Za-z\s]+$"
+                                    pattern="^[A-Za-zА-Яа-яЁё\s]+$"
                                     title="Please use only letters"
                                 />
                             </div>
